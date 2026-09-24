@@ -1,5 +1,6 @@
-"""Snack planogram: slot -> SKU, capacity, expiry.
-Reject vend if expired or below par after sale.
+"""Donde va cada snack y cuando vence.
+
+Si esta vencido no lo vendo. Eso lo saque de un tutorial de inventario.
 """
 from dataclasses import dataclass
 from datetime import date
@@ -38,4 +39,5 @@ class Planogram:
         return True, "vended"
 
     def restock_list(self):
+        # cosas que hay que reponer
         return [s.id for s in self.slots.values() if s.qty <= s.par]
