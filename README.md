@@ -1,15 +1,12 @@
 # open-vending-snacks
 
-Practica: expendedora de snacks.
+Expendedora de snacks. Público. MIT.
 
-Estoy empezando. Quiero que no venda un producto vencido. Lo hice con fechas en `src/planogram.py`.
+Lee `LEEME_LICENCIA.md`. Hacé tu versión. Podés ganar dinero con lo que armes.
+Sin garantía.
 
-Si no funciona, es porque todavia estoy aprendiendo.
+Fechas / no vender vencido: `src/planogram.py`
 
 ```
 python src/planogram.py
 ```
-
-(el archivo todavia no tiene un ejemplo al final, lo voy a agregar)
-
-MIT.
