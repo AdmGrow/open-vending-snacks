@@ -44,9 +44,10 @@ class Planogram:
 
 
 if __name__ == "__main__":
-    # ejemplo corto: un snack vencido no se vende
+    # ejemplo corto: vencido no vende, fresco si
     p = Planogram()
     p.put(Slot("A1", "chips", 10, 3, date(2026, 9, 1), 2))
+    p.put(Slot("B2", "gaseosa", 8, 5, date(2026, 12, 1), 2))
     hoy = date(2026, 9, 28)
-    ok, motivo = p.can_vend("A1", hoy)
-    print(ok, motivo)  # False expired
+    print("A1", p.can_vend("A1", hoy))  # False expired
+    print("B2", p.can_vend("B2", hoy))  # True ok
