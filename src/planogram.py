@@ -41,3 +41,12 @@ class Planogram:
     def restock_list(self):
         # cosas que hay que reponer
         return [s.id for s in self.slots.values() if s.qty <= s.par]
+
+
+if __name__ == "__main__":
+    # ejemplo corto: un snack vencido no se vende
+    p = Planogram()
+    p.put(Slot("A1", "chips", 10, 3, date(2026, 9, 1), 2))
+    hoy = date(2026, 9, 28)
+    ok, motivo = p.can_vend("A1", hoy)
+    print(ok, motivo)  # False expired
