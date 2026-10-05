@@ -14,6 +14,12 @@ class Slot:
     expiry: date | None
     par: int
 
+def is_expired(expiry: date | None, today: date) -> bool:
+    # sin fecha no se si vencio; el dia del vencimiento todavia vende
+    if expiry is None:
+        return False
+    return expiry < today
+
 class Planogram:
     def __init__(self):
         self.slots = {}
@@ -27,7 +33,7 @@ class Planogram:
             return False, "unknown slot"
         if s.qty <= 0:
             return False, "empty"
-        if s.expiry and s.expiry < today:
+        if is_expired(s.expiry, today):
             return False, "expired"
         return True, "ok"
 
@@ -44,10 +50,12 @@ class Planogram:
 
 
 if __name__ == "__main__":
-    # ejemplo corto: vencido no vende, fresco si
+    # tres fechas: ayer no vende, hoy si, manana si
+    hoy = date(2026, 10, 5)
     p = Planogram()
-    p.put(Slot("A1", "chips", 10, 3, date(2026, 9, 1), 2))
+    p.put(Slot("A1", "chips", 10, 3, date(2026, 10, 4), 2))
+    p.put(Slot("A2", "barra", 10, 3, date(2026, 10, 5), 2))
     p.put(Slot("B2", "gaseosa", 8, 5, date(2026, 12, 1), 2))
-    hoy = date(2026, 9, 28)
-    print("A1", p.can_vend("A1", hoy))  # False expired
-    print("B2", p.can_vend("B2", hoy))  # True ok
+    print("ayer", p.can_vend("A1", hoy))   # False expired
+    print("hoy", p.can_vend("A2", hoy))    # True ok
+    print("futuro", p.can_vend("B2", hoy))  # True ok
