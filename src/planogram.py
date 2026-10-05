@@ -59,3 +59,7 @@ if __name__ == "__main__":
     print("ayer", p.can_vend("A1", hoy))   # False expired
     print("hoy", p.can_vend("A2", hoy))    # True ok
     print("futuro", p.can_vend("B2", hoy))  # True ok
+    # si esta vencido, vend no tiene que tocar el stock
+    antes = p.slots["A1"].qty
+    print("vend vencido", p.vend("A1", hoy), "qty", p.slots["A1"].qty)
+    assert p.slots["A1"].qty == antes
