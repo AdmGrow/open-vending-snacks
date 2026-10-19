@@ -48,17 +48,22 @@ class Planogram:
         # cosas que hay que reponer
         return [s.id for s in self.slots.values() if s.qty <= s.par]
 
+    def expired_list(self, today: date):
+        # slots que ya vencieron, para no venderlos
+        return [s.id for s in self.slots.values() if is_expired(s.expiry, today)]
+
 
 if __name__ == "__main__":
     # tres fechas: ayer no vende, hoy si, manana si
-    hoy = date(2026, 10, 5)
+    hoy = date(2026, 10, 19)
     p = Planogram()
-    p.put(Slot("A1", "chips", 10, 3, date(2026, 10, 4), 2))
-    p.put(Slot("A2", "barra", 10, 3, date(2026, 10, 5), 2))
+    p.put(Slot("A1", "chips", 10, 3, date(2026, 10, 18), 2))
+    p.put(Slot("A2", "barra", 10, 3, date(2026, 10, 19), 2))
     p.put(Slot("B2", "gaseosa", 8, 5, date(2026, 12, 1), 2))
     print("ayer", p.can_vend("A1", hoy))   # False expired
     print("hoy", p.can_vend("A2", hoy))    # True ok
     print("futuro", p.can_vend("B2", hoy))  # True ok
+    print("vencidos", p.expired_list(hoy))  # ['A1']
     # si esta vencido, vend no tiene que tocar el stock
     antes = p.slots["A1"].qty
     print("vend vencido", p.vend("A1", hoy), "qty", p.slots["A1"].qty)
