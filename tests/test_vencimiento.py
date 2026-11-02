@@ -3,6 +3,7 @@
 El dia del vencimiento todavia vende. Ayer no.
 Sin fecha no se si vencio, entonces vende.
 Si no hay stock tampoco.
+Si el slot no existe tampoco.
 Todavia estoy con cursos. Si esta mal, avisen.
 """
 from datetime import date
@@ -45,9 +46,17 @@ def test_vacio_no_vende():
     assert ok is False
     assert reason == "empty"
 
+def test_slot_desconocido_no_vende():
+    hoy = date(2026, 10, 19)
+    p = Planogram()
+    ok, reason = p.can_vend("Z9", hoy)
+    assert ok is False
+    assert reason == "unknown slot"
+
 if __name__ == "__main__":
     test_no_vende_vencido()
     test_dia_de_vencimiento_si_vende()
     test_sin_fecha_si_vende()
     test_vacio_no_vende()
+    test_slot_desconocido_no_vende()
     print("ok")
