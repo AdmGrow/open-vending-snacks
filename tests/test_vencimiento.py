@@ -53,10 +53,21 @@ def test_slot_desconocido_no_vende():
     assert ok is False
     assert reason == "unknown slot"
 
+def test_lista_vencidos():
+    # test corto de la lista, para ver que solo marque los que pasaron
+    hoy = date(2026, 10, 19)
+    p = Planogram()
+    p.put(Slot("A1", "chips", 10, 3, date(2026, 10, 18), 2))
+    p.put(Slot("A2", "barra", 10, 3, date(2026, 10, 19), 2))
+    lista = p.expired_list(hoy)
+    assert "A1" in lista
+    assert "A2" not in lista
+
 if __name__ == "__main__":
     test_no_vende_vencido()
     test_dia_de_vencimiento_si_vende()
     test_sin_fecha_si_vende()
     test_vacio_no_vende()
     test_slot_desconocido_no_vende()
+    test_lista_vencidos()
     print("ok")
